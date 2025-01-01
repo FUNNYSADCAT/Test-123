@@ -1,0 +1,107 @@
+local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Rayfield/main/source"))()
+
+local Window = Rayfield:CreateWindow({
+	Name = "NULL HUB",
+	LoadingTitle = "Loading NULL HUB",
+	LoadingSubtitle = "by You",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = "RayfieldConfigs", -- โฟลเดอร์สำหรับบันทึก
+		FileName = "NULL HUB Config"
+	},
+	Discord = {
+		Enabled = false,
+		Invite = "no_invite", -- ใส่ลิงก์ Discord ของคุณที่นี่
+		RememberJoins = true
+	},
+	KeySystem = false
+})
+
+local BypassTab = Window:CreateTab("Bypass Summon", 4483345998)
+local FunTab = Window:CreateTab("FUN", 4483345998)
+
+local function summonTower(towerName)
+	local args = {
+		[1] = towerName
+	}
+	game:GetService("ReplicatedStorage").Functions.RequestTower:InvokeServer(unpack(args))
+
+	local player = game.Players.LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+	local position = character:WaitForChild("HumanoidRootPart").CFrame
+
+	local args = {
+		[1] = towerName,
+		[2] = position
+	}
+	game:GetService("ReplicatedStorage").Functions.ChangeMode:InvokeServer(unpack(args))
+	print(towerName .. " summoned.")
+end
+
+-- Buttons for "Bypass Summon"
+local towers = {
+	{ Name = "Titan Cameraman (750)", Cost = 750 },
+	{ Name = "Titan Speakerman (500)", Cost = 500 },
+	{ Name = "Titan TV Man (1000)", Cost = 1000 },
+	{ Name = "Upgraded Titan Cameraman (1500)", Cost = 1500 },
+	{ Name = "Titan Cinemaman (2000)", Cost = 2000 },
+	{ Name = "Upgraded Titan Speakerman (1000)", Cost = 1000 },
+	{ Name = "Titan Presentwoman (2000)", Cost = 2000 },
+	{ Name = "Engineer Cameraman (200)", Cost = 200 },
+	{ Name = "Scientist Cameraman (100)", Cost = 100 },
+	{ Name = "Large Scientist Cameraman (300)", Cost = 300 },
+	{ Name = "Jetpack Cameraman (300)", Cost = 300 },
+	{ Name = "Camera Helicopter (200)", Cost = 200 },
+	{ Name = "Laser Cameraman Car (300)", Cost = 300 },
+	{ Name = "Ninja Cameraman (200)", Cost = 200 }
+}
+
+for _, tower in ipairs(towers) do
+	BypassTab:CreateButton({
+		Name = tower.Name,
+		Callback = function()
+			summonTower(tower.Name:match("^(.*)%s%(")) -- ตัดข้อความหลัง "(cost ...)"
+		end
+	})
+end
+
+-- FUN Tab
+local toggleEnabled = false
+local currentSpeed = 16
+
+FunTab:CreateSlider({
+	Name = "Set Speed",
+	Range = {0, 100},
+	Increment = 1,
+	Suffix = "Speed",
+	CurrentValue = currentSpeed,
+	Callback = function(Value)
+		if toggleEnabled then
+			local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+			local humanoid = character:WaitForChild("Humanoid")
+			humanoid.WalkSpeed = Value
+			currentSpeed = Value
+			print("Speed set to: " .. Value)
+		else
+			print("Toggle is off, cannot set speed.")
+		end
+	end
+})
+
+FunTab:CreateToggle({
+	Name = "Enable Speed Adjustment",
+	CurrentValue = false,
+	Callback = function(Value)
+		toggleEnabled = Value
+		if not Value then
+			local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+			local humanoid = character:WaitForChild("Humanoid")
+			humanoid.WalkSpeed = 16 -- Reset speed
+			print("Speed adjustment disabled. Resetting speed to default.")
+		else
+			print("Speed adjustment enabled.")
+		end
+	end
+})
+
+Rayfield:LoadConfiguration()

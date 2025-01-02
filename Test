@@ -1,9 +1,8 @@
-local TeleportService = game:GetService("TeleportService")
-local PlaceId = 90192874177359 -- เปลี่ยนเป็น ID ของแมพที่ต้องการเข้าร่วม
+local TargetPlaceId = 118688242561353 -- เปลี่ยนเป็น PlaceId ที่ต้องการตรวจสอบ
 
--- สร้างฟังก์ชันออโต้ join
 game.Players.PlayerAdded:Connect(function(player)
-    if player == game.Players.LocalPlayer then
-        TeleportService:Teleport(PlaceId)
+    -- ตรวจสอบว่าเกมที่ผู้เล่นเข้าไปมี PlaceId ที่ตรงกับ TargetPlaceId หรือไม่
+    if game.PlaceId == TargetPlaceId then
+        player:Kick("lobby รันไม่ติด/lobby don't work.") -- ข้อความเตือนเมื่อถูกเตะ
     end
 end)

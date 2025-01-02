@@ -1,8 +1,6 @@
 local TargetPlaceId = 118688242561353 -- เปลี่ยนเป็น PlaceId ที่ต้องการตรวจสอบ
 
-game.Players.PlayerAdded:Connect(function(player)
-    -- ตรวจสอบว่าเกมที่ผู้เล่นเข้าไปมี PlaceId ที่ตรงกับ TargetPlaceId หรือไม่
-    if game.PlaceId == TargetPlaceId then
-        player:Kick("lobby รันไม่ติด/lobby don't work.") -- ข้อความเตือนเมื่อถูกเตะ
-    end
-end)
+-- ตรวจสอบว่า PlaceId ของเกมตรงกับที่ต้องการ
+if game.PlaceId == TargetPlaceId then
+    game.Players.LocalPlayer:Kick("lobby รันไม่ติด/lobby don't work.") -- ข้อความเตือนเมื่อถูกเตะ
+end

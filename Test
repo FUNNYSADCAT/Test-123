@@ -2,5 +2,5 @@ local TargetPlaceId = 118688242561353 -- เปลี่ยนเป็น Place
 
 -- ตรวจสอบว่า PlaceId ของเกมตรงกับที่ต้องการ
 if game.PlaceId == TargetPlaceId then
-    game.Players.LocalPlayer:Kick("lobby รันไม่ติด/lobby don't work.") -- ข้อความเตือนเมื่อถูกเตะ
+    game.Players.LocalPlayer:Kick("อย่าหารันใน lobby/don't execute in lobby") -- ข้อความเตือนเมื่อถูกเตะ
 end

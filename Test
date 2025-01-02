@@ -1,5 +1,5 @@
 local TeleportService = game:GetService("TeleportService")
-local PlaceId = 1234567890 -- เปลี่ยนเป็น ID ของแมพที่ต้องการเข้าร่วม
+local PlaceId = 90192874177359 -- เปลี่ยนเป็น ID ของแมพที่ต้องการเข้าร่วม
 
 -- สร้างฟังก์ชันออโต้ join
 game.Players.PlayerAdded:Connect(function(player)
